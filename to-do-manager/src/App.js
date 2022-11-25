@@ -1,9 +1,9 @@
-
+import ProjectsPage from "./pages/projects/ProjectsPage";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Test</h1>
+    <div className="app-wrapper">
+      <ProjectsPage />
     </div>
   );
 }
