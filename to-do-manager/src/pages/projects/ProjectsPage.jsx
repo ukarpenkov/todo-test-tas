@@ -3,7 +3,7 @@ import ProjectItem from '../../components/project-item/ProjectItem'
 
 const ProjectsPage = (props) => {
 
-    const [projects, setProjects] = useState([{ name: 'Проект 1', done: false, id: 1 }, { name: 'Проект 2', done: true, id: 2 }]);
+    const [projects, setProjects] = useState([]);
     const [projectTitle, setProjectTitle] = useState('');
     const addProject = event => {
         if (event.key === 'Enter') {
@@ -35,15 +35,3 @@ const ProjectsPage = (props) => {
 
 
 export default ProjectsPage
-// const handleProjectStatusChange = id => {
-//     const updatedProjects = projects.map(projects => {
-//         if (projects.id === id) {
-//             return {
-//                 ...projects,
-//                 done: !projects.done
-//             }
-//         }
-//         return projects
-//     })
-
-// }
