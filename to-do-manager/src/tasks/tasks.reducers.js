@@ -1,11 +1,11 @@
-const initialState = {}
+// const initialState = {}
 
-const tasksReducer = (state = initialState, action) => {
-    switch (action.type) {
-        default:
-            return state
-    }
-}
+// const tasksReducer = (state = initialState, action) => {
+//     switch (action.type) {
+//         default:
+//             return state
+//     }
+// }
 
 
-export default tasksReducer
+// export default tasksReducer

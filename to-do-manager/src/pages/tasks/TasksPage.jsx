@@ -1,49 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useLayoutEffect, useReducer, useState } from 'react'
+import taskReducer from '../../components/tasks/task-reducer';
+
 import TasksList from '../../components/tasks/TasksList';
-
-
-
+import { TaskContext } from '../../tasks-context';
 
 
 const TasksPage = () => {
-    const dispatch = useDispatch()
-    const todoList = useSelector(state => state.tasksReducer.todos)
-    console.log(todoList)
-    const [todos, setTodos] = useState(() => {
-        const saved = localStorage.getItem("todos");
-        const initialValue = JSON.parse(saved);
-        return initialValue || []
-    });
+    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || [])
     const [todoTitle, setTodoTitle] = useState('');
 
     useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
-    }, [todos]);
+        localStorage.setItem('todos', JSON.stringify(state))
+        console.log(state)
+    }, [state])
 
 
     const addTodo = event => {
-        const newTask = { title: todoTitle, done: false, id: Date.now() }
         if (event.key === 'Enter') {
-            setTodos([
-                ...todos,
-                newTask
-            ])
-            dispatch({ type: "ADD_TASK", payload: newTask })
+            dispatch({
+                type: "ADD_TASK",
+                payload: todoTitle
+            })
             setTodoTitle('')
         }
     }
 
-
     return (
-        <div className='todos-list'>
-            <div className='create-todo'>
-                <input type="text" className='create-todo__input' value={todoTitle} onChange={event => setTodoTitle(event.target.value)}
-                    onKeyPress={addTodo} />
-                <button className='create-todo__btn'>Создать задачу</button>
+        <TaskContext.Provider value={{
+            dispatch
+        }}>
+            <div className='todos-list'>
+                <div className='create-todo'>
+                    <input
+                        type="text"
+                        className='create-todo__input'
+                        value={todoTitle}
+                        onChange={event => setTodoTitle(event.target.value)}
+                        onKeyPress={addTodo}
+                    />
+                    <button className='create-todo__btn'>Создать задачу</button>
+                </div>
+                <TasksList todos={state} />
             </div>
-            <TasksList todos={todos} />
-        </div>
+        </TaskContext.Provider>
     )
 }
 
