@@ -1,0 +1,9 @@
+.boards {
+  display: flex;
+  width: 90%;
+}
+
+.board {
+  width: 30%;
+  border: 1px solid black;
+}

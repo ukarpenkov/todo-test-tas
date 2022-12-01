@@ -5,9 +5,12 @@ export default function taskReducer(state, action) {
             return [
                 ...state,
                 {
-                    id: Date.now(),
-                    title: action.payload,
-                    done: false
+                    board: 'queue',
+                    tasks: [{
+                        id: Date.now(),
+                        title: action.payload,
+                        done: false
+                    }]
                 }
             ]
         case "TOGGLE_TASK":

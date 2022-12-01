@@ -4,11 +4,20 @@ import TasksItem from './TasksItem';
 
 
 const TasksList = ({ todos }) => {
+
     return (
         <ul className='todos'>
             {todos.map(item =>
             (
-                <TasksItem key={item.id} {...item} />
+                <div
+                    draggable={true}
+                // onDragOver={e => dragOverHandler(e)}
+                // onDragLeave={e => dragLeaveHandler(e)}
+                // onDragStart={e => dragStartHandler(e, board, item)}
+                // onDrop={e => dropHandler(e, board, item)}
+                >
+                    <TasksItem key={item.id} {...item} />
+                </div>
             ))}
         </ul>
 

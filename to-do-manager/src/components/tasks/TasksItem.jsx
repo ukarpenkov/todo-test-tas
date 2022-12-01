@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { TaskContext } from '../../tasks-context';
 
 const TasksItem = ({ title, id, done }) => {
-    const { dispatch } = useContext(TaskContext)
 
+    const { dispatch } = useContext(TaskContext)
 
     const cls = ['task-item']
     if (done) {
@@ -12,7 +12,9 @@ const TasksItem = ({ title, id, done }) => {
     }
 
     return (
-        <li className={cls.join(' ')}>
+        <li className={cls.join(' ')}
+
+        >
             <input
                 className='todo-item__checkbox'
                 type="checkbox"
