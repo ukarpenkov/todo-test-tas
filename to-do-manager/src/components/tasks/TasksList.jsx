@@ -4,7 +4,7 @@ import TasksItem from './TasksItem';
 
 
 const TasksList = ({ todos }) => {
-
+    console.log('taskList', todos)
     return (
         <ul className='todos'>
             {todos.map(item =>

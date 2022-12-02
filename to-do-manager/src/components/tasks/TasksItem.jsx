@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { TaskContext } from '../../tasks-context';
 
 const TasksItem = ({ title, id, done }) => {
-
+    console.log('ffff', title, id, done);
     const { dispatch } = useContext(TaskContext)
 
     const cls = ['task-item']

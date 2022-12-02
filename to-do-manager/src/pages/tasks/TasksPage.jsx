@@ -1,23 +1,22 @@
-import React, { useEffect, useLayoutEffect, useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import taskReducer from '../../components/tasks/task-reducer';
 import TaskCreator from '../../components/tasks/TaskCreator';
-import _JSXStyle from 'styled-jsx/style'
 import TasksList from '../../components/tasks/TasksList';
 import { TaskContext } from '../../tasks-context';
 import './style.css'
 
 
 const TasksPage = () => {
-    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || [{
-        board: 'queue',
+    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || {
+        project: 'one',
         tasks: [{
             id: 1,
             title: 'one',
-            done: false
+            done: false,
+            board: 'queue'
         }]
+    })
 
-    }]
-    )
     const [todoTitle, setTodoTitle] = useState('')
     const [isModal, setModal] = useState(false)
     // const [boards, setBoards] = useState([{ title: 'Queue', items: [] }, { title: 'Development', items: [] }, { title: 'Done', items: [] }])
@@ -62,11 +61,10 @@ const TasksPage = () => {
     //     }))
     // }
 
-    console.log(state)
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(state))
-    }, [state])
+    // useEffect(() => {
+    //     localStorage.setItem('todos', JSON.stringify(state))
+    // }, [state])
 
     const addTodo = event => {
         if (event.key === 'Enter') {
@@ -77,6 +75,7 @@ const TasksPage = () => {
             setTodoTitle('')
         }
     }
+    console.log('TaskPage State', state)
 
 
     return (

@@ -2,17 +2,16 @@
 export default function taskReducer(state, action) {
     switch (action.type) {
         case "ADD_TASK":
-            return [
-                ...state,
-                {
-                    board: 'queue',
-                    tasks: [{
+            return {
+                tasks: [
+                    ...state.tasks,
+                    {
                         id: Date.now(),
                         title: action.payload,
                         done: false
                     }]
-                }
-            ]
+            }
+
         case "TOGGLE_TASK":
             return state.map((todo) => {
                 if (todo.id === action.payload) {
