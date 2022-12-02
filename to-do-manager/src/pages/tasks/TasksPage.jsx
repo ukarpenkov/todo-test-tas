@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react'
+import { useDrag, useDrop } from 'react-dnd';
 import taskReducer from '../../components/tasks/task-reducer';
 import TaskCreator from '../../components/tasks/TaskCreator';
 import TasksList from '../../components/tasks/TasksList';
@@ -7,19 +8,23 @@ import './style.css'
 
 
 const TasksPage = () => {
-    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || {
+    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || [{
         project: 'one',
-        tasks: [{
-            id: 1,
-            title: 'one',
-            done: false,
-            board: 'queue'
-        }]
-    })
+        id: 1,
+        title: 'one',
+        done: false,
+        board: 'queue'
+    }]
+    )
 
     const [todoTitle, setTodoTitle] = useState('')
     const [isModal, setModal] = useState(false)
-    // const [boards, setBoards] = useState([{ title: 'Queue', items: [] }, { title: 'Development', items: [] }, { title: 'Done', items: [] }])
+    const [boards, setBoards] = useState([{ title: 'Queue', items: [] }, { title: 'Development', items: [] }, { title: 'Done', items: [] }])
+
+    const [] = useDrop
+
+
+
     // const [currentBoard, setCurrentBoard] = useState(null)
     // const [currentItem, setCurrentItem] = useState(null)
 
@@ -45,7 +50,6 @@ const TasksPage = () => {
     //             return currentIndex
     //         }
     //     }))
-
     // }
     // const dropCardHandler = (e, board) => {
     //     board.items.push(currentItem)
@@ -62,9 +66,9 @@ const TasksPage = () => {
     // }
 
 
-    // useEffect(() => {
-    //     localStorage.setItem('todos', JSON.stringify(state))
-    // }, [state])
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(state))
+    }, [state])
 
     const addTodo = event => {
         if (event.key === 'Enter') {
@@ -75,7 +79,7 @@ const TasksPage = () => {
             setTodoTitle('')
         }
     }
-    console.log('TaskPage State', state)
+    console.log('TaskPage StateTasks', state)
 
 
     return (
@@ -105,7 +109,7 @@ const TasksPage = () => {
                                     onClick={() => setModal(true)}
                                 >Создать задачу</button>
                             </div>
-                            <TasksList todos={state.tasks} />
+                            <TasksList todos={state} />
                             <TaskCreator
                                 isVisible={isModal}
                                 title="Modal Title"
