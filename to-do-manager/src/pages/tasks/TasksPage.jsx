@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from 'react'
 import taskReducer from '../../components/tasks/task-reducer';
 import TaskBoard from '../../components/tasks/TaskBoard';
 import TaskCreator from '../../components/tasks/TaskCreator';
+import TasksList from '../../components/tasks/TasksList';
 import { TaskContext } from '../../tasks-context';
 import './style.css'
 
@@ -68,7 +69,8 @@ const TasksPage = () => {
                 />
                 <div
                     className='boards' >
-                    <TaskBoard card={index === 1} moveCard={moveCard.bind(null, 1)} state={state}>
+                    <TasksList todos={state} />
+                    {/* <TaskBoard card={index === 1} moveCard={moveCard.bind(null, 1)} state={state}>
                         <div className='board__title'>
                             <h3>Queue</h3>
                         </div>
@@ -82,7 +84,7 @@ const TasksPage = () => {
                         <div className='board__title'>
                             <h3>Done</h3>
                         </div>
-                    </TaskBoard>
+                    </TaskBoard> */}
                 </div>
 
             </div>
