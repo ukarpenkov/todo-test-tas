@@ -1,8 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react'
-import { useDrag, useDrop } from 'react-dnd';
 import taskReducer from '../../components/tasks/task-reducer';
+import TaskBoard from '../../components/tasks/TaskBoard';
 import TaskCreator from '../../components/tasks/TaskCreator';
-import TasksList from '../../components/tasks/TasksList';
 import { TaskContext } from '../../tasks-context';
 import './style.css'
 
@@ -19,52 +18,12 @@ const TasksPage = () => {
 
     const [todoTitle, setTodoTitle] = useState('')
     const [isModal, setModal] = useState(false)
-    const [boards, setBoards] = useState([{ title: 'Queue', items: [] }, { title: 'Development', items: [] }, { title: 'Done', items: [] }])
 
-    const [] = useDrop
+    const [index, setIndex] = useState(1)
 
-
-
-    // const [currentBoard, setCurrentBoard] = useState(null)
-    // const [currentItem, setCurrentItem] = useState(null)
-
-    // const dragOverHandler = (e) => {
-
-    // }
-    // const dragLeaveHandler = (e) => { }
-    // const dragStartHandler = (e, board, item) => {
-    //     setCurrentBoard(board)
-    //     setCurrentItem(item)
-    // }
-    // const dropHandler = (e, board, item) => {
-    //     e.preventDefault()
-    //     const currentIndex = currentBoard.items.indexOf(currentItem)
-    //     currentIndex.items.splice(currentIndex, 1)
-    //     const dropIndex = board.items.indexOf(item)
-    //     board.items.splice(dropIndex + 1, 0, currentItem)
-    //     setBoards(board.map(b => {
-    //         if (b.id === board.id) {
-    //             return board
-    //         }
-    //         if (b.id === currentBoard.id) {
-    //             return currentIndex
-    //         }
-    //     }))
-    // }
-    // const dropCardHandler = (e, board) => {
-    //     board.items.push(currentItem)
-    //     const currentIndex = currentBoard.items.indexOf(currentItem)
-    //     currentIndex.items.splice(currentIndex, 1)
-    //     setBoards(board.map(b => {
-    //         if (b.id === board.id) {
-    //             return board
-    //         }
-    //         if (b.id === currentBoard.id) {
-    //             return currentIndex
-    //         }
-    //     }))
-    // }
-
+    function moveCard(i) {
+        setIndex(i)
+    }
 
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(state))
@@ -86,52 +45,48 @@ const TasksPage = () => {
         <TaskContext.Provider value={{
             dispatch
         }}>
+
             <div className='task-page-wrapper'>
+                <div className='create-todo'>
+                    <input
+                        type="text"
+                        className='create-todo__input'
+                        value={todoTitle}
+                        onChange={event => setTodoTitle(event.target.value)}
+                        onKeyPress={addTodo}
+                    />
+                    <button className='create-todo__btn'
+                        onClick={() => setModal(true)}
+                    >Создать задачу</button>
+                </div>
+                <TaskCreator
+                    isVisible={isModal}
+                    title="Modal Title"
+                    content={<p>Add your content here</p>}
+                    footer={<button>Cancel</button>}
+                    onClose={() => setModal(false)}
+                />
                 <div
-                    className='boards'
-                // onDragOver={e => dragOverHandler(e)}
-                // onDrop={e => dropCardHandler(e, board)}
-                >
-                    <div className='board'>
+                    className='boards' >
+                    <TaskBoard card={index === 1} moveCard={moveCard.bind(null, 1)} state={state}>
                         <div className='board__title'>
                             <h3>Queue</h3>
                         </div>
-                        <div className='todos-list'>
-                            <div className='create-todo'>
-                                <input
-                                    type="text"
-                                    className='create-todo__input'
-                                    value={todoTitle}
-                                    onChange={event => setTodoTitle(event.target.value)}
-                                    onKeyPress={addTodo}
-                                />
-                                <button className='create-todo__btn'
-                                    onClick={() => setModal(true)}
-                                >Создать задачу</button>
-                            </div>
-                            <TasksList todos={state} />
-                            <TaskCreator
-                                isVisible={isModal}
-                                title="Modal Title"
-                                content={<p>Add your content here</p>}
-                                footer={<button>Cancel</button>}
-                                onClose={() => setModal(false)}
-                            />
-                        </div>
-                    </div>
-                    <div className='board'>
+                    </TaskBoard >
+                    <TaskBoard card={index === 2} moveCard={moveCard.bind(null, 2)} state={state}>
                         <div className='board__title'>
                             <h3>Development</h3>
                         </div>
-                    </div>
-                    <div className='board'>
+                    </TaskBoard>
+                    <TaskBoard card={index === 3} moveCard={moveCard.bind(null, 3)} state={state} >
                         <div className='board__title'>
                             <h3>Done</h3>
                         </div>
-                    </div>
+                    </TaskBoard>
                 </div>
+
             </div>
-        </TaskContext.Provider>
+        </TaskContext.Provider >
     )
 }
 

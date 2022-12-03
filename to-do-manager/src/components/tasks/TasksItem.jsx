@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useDrag } from 'react-dnd';
 import { TaskContext } from '../../tasks-context';
 
 const TasksItem = ({ title, id, done }) => {
@@ -10,10 +11,16 @@ const TasksItem = ({ title, id, done }) => {
 
         cls.push('completed')
     }
+    const [{ isDragging }, dragRef] = useDrag({
+        type: 'card',
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging()
+        })
+    })
 
     return (
         <li className={cls.join(' ')}
-
+            ref={dragRef}
         >
             <input
                 className='todo-item__checkbox'

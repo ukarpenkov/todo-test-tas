@@ -1,9 +1,10 @@
 .boards {
   display: flex;
-  width: 90%;
+  width: 100%;
 }
 
 .board {
-  width: 30%;
+  width: 300%;
+  height: 400%;
   border: 1px solid black;
 }
