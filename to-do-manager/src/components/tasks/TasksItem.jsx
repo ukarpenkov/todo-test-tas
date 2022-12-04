@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
-import { useDrag } from 'react-dnd';
+import React, { useContext, useEffect } from 'react';
 import { TaskContext } from '../../tasks-context';
 import './style.css'
 
 const TasksItem = ({ title, id, done }) => {
-    console.log('ffff', title, id, done);
     const { dispatch } = useContext(TaskContext)
 
     const cls = ['task-item']
@@ -12,17 +10,9 @@ const TasksItem = ({ title, id, done }) => {
 
         cls.push('completed')
     }
-    // const [{ isDragging }, dragRef] = useDrag({
-    //     type: 'card',
-    //     collect: (monitor) => ({
-    //         isDragging: monitor.isDragging()
-    //     })
-    // })
 
     return (
-        <li className={cls.join(' ')}
-        // ref={dragRef}
-        >
+        <>
             <input
                 className='todo-item__checkbox'
                 type="checkbox"
@@ -37,7 +27,7 @@ const TasksItem = ({ title, id, done }) => {
                     type: "REMOVE_TASK",
                     payload: id
                 })}>удалить задачу</button>
-        </li>
+        </>
     )
 }
 

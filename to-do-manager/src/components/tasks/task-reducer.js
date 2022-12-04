@@ -23,7 +23,6 @@ export default function taskReducer(state, action) {
             })
         case "REMOVE_TASK":
             return state.filter(todo => todo.id !== action.payload)
-
         default:
             return state
     }

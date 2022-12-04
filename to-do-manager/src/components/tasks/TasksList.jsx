@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
-import { useDrag } from 'react-dnd';
+import React, { useContext, useEffect, useState } from 'react';
+import { useReducer } from 'react';
+import { TaskContext } from '../../tasks-context';
+import './style.css'
+import taskReducer from './task-reducer';
 import TasksItem from './TasksItem';
 
 
 
 const TasksList = ({ todos }) => {
-
     const [boards, setBoards] = useState([{ id: 1, title: 'queue', items: todos },
-    { id: 2, title: 'development', items: [{ id: 200, title: 'hello' }] }, { id: 3, title: 'done', items: [{ id: 300, title: 'test' }] }])
-
-
-
+    { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
 
+    const cls = ['task-item']
+    if (todos.done) {
+        cls.push('completed')
+    }
+
     const dragOverHandler = (e) => {
         e.preventDefault()
-        if (e.target.className === 'task-item-test') {
+        if (e.target.className === 'task-item') {
             e.target.style.boxShadow = '0 10px 5px black'
         }
     }
@@ -46,7 +50,9 @@ const TasksList = ({ todos }) => {
                 return currentBoard
             }
             return b
+
         }))
+        e.target.style.boxShadow = 'none'
     }
     const dropCardHandler = (e, board) => {
         board.items.push(currentItem)
@@ -63,39 +69,33 @@ const TasksList = ({ todos }) => {
         }))
     }
 
+
     return (
         <div className='app'>
             {boards.map(board =>
-                <div className='board'
+                <div
+                    key={board.id}
+                    className='board'
                     onDragOver={e => dragOverHandler(e)}
                     onDrop={e => dropCardHandler(e, board)}
                 >
                     <h1>{board.title}</h1>
                     {board.items.map(item =>
-                        <div className='task-item-test'
+                        <div
+                            key={item.id}
+                            className={cls.join(' ')}
                             draggable={true}
                             onDragOver={e => dragOverHandler(e)}
                             onDragLeave={e => dragLeaveHandler(e)}
                             onDragStart={e => dragStartHandler(e, board, item)}
                             onDragEnd={e => dragEndHandler(e)}
                             onDrop={e => dropHandler(e, board, item)}
-
-
-
-                        >{item.title} </div>)}
+                        >
+                            <TasksItem {...item} />
+                        </div>)}
                 </div>
             )}
         </div>
-        //       {/* <ul className='todos'>
-        //     {todos.map(item =>
-        //     (
-        //         <div
-        //         >
-        //             <TasksItem key={item.id} {...item} />
-        //         </div>
-        //     ))}
-        // </ul> */}
-
     )
 }
 

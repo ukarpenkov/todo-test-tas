@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import taskReducer from '../../components/tasks/task-reducer';
-import TaskBoard from '../../components/tasks/TaskBoard';
 import TaskCreator from '../../components/tasks/TaskCreator';
 import TasksList from '../../components/tasks/TasksList';
 import { TaskContext } from '../../tasks-context';
@@ -8,23 +7,12 @@ import './style.css'
 
 
 const TasksPage = () => {
-    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || [{
-        project: 'one',
-        id: 1,
-        title: 'one',
-        done: false,
-        board: 'queue'
-    }]
-    )
+    const [state, dispatch] = useReducer(taskReducer, JSON.parse(localStorage.getItem("todos")) || [])
 
     const [todoTitle, setTodoTitle] = useState('')
     const [isModal, setModal] = useState(false)
 
-    const [index, setIndex] = useState(1)
 
-    function moveCard(i) {
-        setIndex(i)
-    }
 
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(state))
@@ -39,14 +27,13 @@ const TasksPage = () => {
             setTodoTitle('')
         }
     }
-    console.log('TaskPage StateTasks', state)
+
 
 
     return (
         <TaskContext.Provider value={{
             dispatch
         }}>
-
             <div className='task-page-wrapper'>
                 <div className='create-todo'>
                     <input
@@ -70,21 +57,6 @@ const TasksPage = () => {
                 <div
                     className='boards' >
                     <TasksList todos={state} />
-                    {/* <TaskBoard card={index === 1} moveCard={moveCard.bind(null, 1)} state={state}>
-                        <div className='board__title'>
-                            <h3>Queue</h3>
-                        </div>
-                    </TaskBoard >
-                    <TaskBoard card={index === 2} moveCard={moveCard.bind(null, 2)} state={state}>
-                        <div className='board__title'>
-                            <h3>Development</h3>
-                        </div>
-                    </TaskBoard>
-                    <TaskBoard card={index === 3} moveCard={moveCard.bind(null, 3)} state={state} >
-                        <div className='board__title'>
-                            <h3>Done</h3>
-                        </div>
-                    </TaskBoard> */}
                 </div>
 
             </div>
