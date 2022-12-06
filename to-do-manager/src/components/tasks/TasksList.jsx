@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useReducer } from 'react';
-import { TaskContext } from '../../tasks-context';
+import React, { useState } from 'react';
+
 import './style.css'
-import taskReducer from './task-reducer';
+
 import TasksItem from './TasksItem';
 
 
