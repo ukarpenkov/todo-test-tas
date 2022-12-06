@@ -55,6 +55,7 @@ const TasksList = ({ todos }) => {
         e.target.style.boxShadow = 'none'
     }
     const dropCardHandler = (e, board) => {
+        console.log(board);
         board.items.push(currentItem)
         const currentIndex = currentBoard.items.indexOf(currentItem)
         currentBoard.items.splice(currentIndex, 1)
