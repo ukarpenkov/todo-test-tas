@@ -1,17 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useReducer } from 'react';
-import { TaskContext } from '../../tasks-context';
+import React, { useState } from 'react';
+
+
 import './style.css'
-import taskReducer from './task-reducer';
+
 import TasksItem from './TasksItem';
 
 
 
 const TasksList = ({ todos }) => {
-    const [boards, setBoards] = useState([{ id: 1, title: 'queue', items: todos },
-    { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
+
+    const [boards, setBoards] = useState([
+        { id: 1, title: 'queue', items: [{ id: 100, title: 'очередь', done: false }, { id: 600, title: 'очередь', done: false }] },
+        { id: 2, title: 'development', items: [{ id: 300, title: 'В работе', done: false }] },
+        { id: 3, title: 'done', items: [{ id: 400, title: 'выполнено', done: true }] }
+    ])
+
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
+
 
     const cls = ['task-item']
     if (todos.done) {
@@ -33,7 +39,6 @@ const TasksList = ({ todos }) => {
     }
 
     const dragEndHandler = (e) => {
-        e.preventDefault()
         e.target.style.boxShadow = 'none'
     }
     const dropHandler = (e, board, item) => {
@@ -67,11 +72,13 @@ const TasksList = ({ todos }) => {
             }
             return b
         }))
+        e.target.style.boxShadow = 'none'
     }
 
 
     return (
         <div className='app'>
+
             {boards.map(board =>
                 <div
                     key={board.id}
