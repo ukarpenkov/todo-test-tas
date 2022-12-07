@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 
 import './style.css'
 
@@ -7,10 +8,24 @@ import TasksItem from './TasksItem';
 
 
 const TasksList = ({ todos }) => {
-    const [boards, setBoards] = useState([{ id: 1, title: 'queue', items: todos },
-    { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
+    const [boards, setBoards] = useState(
+        // JSON.parse(localStorage.getItem("boards")) || 
+        [{ id: 1, title: 'queue', items: todos },
+        { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
+    useEffect(() => {
+        localStorage.setItem('boards', JSON.stringify(boards))
+
+    }, [boards])
+
+
+
+    // useEffect(() => {
+    //     let tasks = JSON.parse(localStorage.getItem("todos"))
+    //     let boards = JSON.parse(localStorage.getItem("boards"))
+    //     setBoards(boards[0].items.push(tasks))
+    // }, [boards])
 
     const cls = ['task-item']
     if (todos.done) {
@@ -52,6 +67,7 @@ const TasksList = ({ todos }) => {
 
         }))
         e.target.style.boxShadow = 'none'
+
     }
     const dropCardHandler = (e, board) => {
         console.log(board);
@@ -67,7 +83,10 @@ const TasksList = ({ todos }) => {
             }
             return b
         }))
+        e.target.style.boxShadow = 'none'
+
     }
+
 
 
     return (
