@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useEffect } from 'react';
+import { TaskContext } from '../../tasks-context';
+
 
 import './style.css'
 
@@ -8,24 +10,22 @@ import TasksItem from './TasksItem';
 
 
 const TasksList = ({ todos }) => {
+    const { dispatch } = useContext(TaskContext)
     const [boards, setBoards] = useState(
-        // JSON.parse(localStorage.getItem("boards")) || 
+        JSON.parse(localStorage.getItem("boards")) ||
         [{ id: 1, title: 'queue', items: todos },
         { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
+
+
     useEffect(() => {
         localStorage.setItem('boards', JSON.stringify(boards))
-
     }, [boards])
 
-
-
-    // useEffect(() => {
-    //     let tasks = JSON.parse(localStorage.getItem("todos"))
-    //     let boards = JSON.parse(localStorage.getItem("boards"))
-    //     setBoards(boards[0].items.push(tasks))
-    // }, [boards])
+    useEffect(() => {
+        setBoards(JSON.parse(localStorage.getItem("boards")))
+    }, [todos])
 
     const cls = ['task-item']
     if (todos.done) {
@@ -38,18 +38,20 @@ const TasksList = ({ todos }) => {
             e.target.style.boxShadow = '0 10px 5px black'
         }
     }
-    const dragLeaveHandler = (e) => {
+
+    const dragLeaveHandler = (e, item) => {
         e.target.style.boxShadow = 'none'
     }
+
     const dragStartHandler = (e, board, item) => {
         setCurrentBoard(board)
         setCurrentItem(item)
     }
 
     const dragEndHandler = (e) => {
-        e.preventDefault()
         e.target.style.boxShadow = 'none'
     }
+
     const dropHandler = (e, board, item) => {
         e.preventDefault()
         const currentIndex = currentBoard.items.indexOf(currentItem)
@@ -67,10 +69,9 @@ const TasksList = ({ todos }) => {
 
         }))
         e.target.style.boxShadow = 'none'
-
     }
+
     const dropCardHandler = (e, board) => {
-        console.log(board);
         board.items.push(currentItem)
         const currentIndex = currentBoard.items.indexOf(currentItem)
         currentBoard.items.splice(currentIndex, 1)
@@ -84,7 +85,10 @@ const TasksList = ({ todos }) => {
             return b
         }))
         e.target.style.boxShadow = 'none'
-
+        dispatch({
+            type: "CHANGE_CARD",
+            payload: board.title
+        })
     }
 
 
@@ -115,6 +119,7 @@ const TasksList = ({ todos }) => {
                 </div>
             )}
         </div>
+
     )
 }
 

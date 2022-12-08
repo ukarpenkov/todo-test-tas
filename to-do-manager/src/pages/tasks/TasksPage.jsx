@@ -21,9 +21,6 @@ const TasksPage = () => {
         // localStorage.setItem('boards', JSON.stringify(currentBoards))
     }, [state])
 
-    useEffect(() => {
-        console.log('dddd')
-    }, [state])
     const addTodo = event => {
         if (event.key === 'Enter') {
             dispatch({
@@ -33,8 +30,6 @@ const TasksPage = () => {
             setTodoTitle('')
         }
     }
-
-
 
     return (
         <TaskContext.Provider value={{
