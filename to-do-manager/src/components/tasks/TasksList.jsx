@@ -12,13 +12,13 @@ import TasksItem from './TasksItem';
 const TasksList = ({ todos }) => {
     const { dispatch } = useContext(TaskContext)
     const [boards, setBoards] = useState(
-        // JSON.parse(localStorage.getItem("boards")) ||
+        JSON.parse(localStorage.getItem("boards")) ||
         [{ id: 1, title: 'queue', items: todos },
         { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
 
-    console.log(a)
+
 
 
     useEffect(() => {
