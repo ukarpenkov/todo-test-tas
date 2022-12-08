@@ -12,20 +12,24 @@ import TasksItem from './TasksItem';
 const TasksList = ({ todos }) => {
     const { dispatch } = useContext(TaskContext)
     const [boards, setBoards] = useState(
-        JSON.parse(localStorage.getItem("boards")) ||
+        // JSON.parse(localStorage.getItem("boards")) ||
         [{ id: 1, title: 'queue', items: todos },
         { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
 
 
-    useEffect(() => {
-        localStorage.setItem('boards', JSON.stringify(boards))
-    }, [boards])
+
 
     useEffect(() => {
         setBoards(JSON.parse(localStorage.getItem("boards")))
     }, [todos])
+
+    useEffect(() => {
+        localStorage.setItem('boards', JSON.stringify(boards))
+    }, [boards])
+
+
 
     const cls = ['task-item']
     if (todos.done) {
@@ -41,6 +45,10 @@ const TasksList = ({ todos }) => {
 
     const dragLeaveHandler = (e, item) => {
         e.target.style.boxShadow = 'none'
+        dispatch({
+            type: "CHANGE_CARD",
+            payload: item.id
+        })
     }
 
     const dragStartHandler = (e, board, item) => {
@@ -50,6 +58,7 @@ const TasksList = ({ todos }) => {
 
     const dragEndHandler = (e) => {
         e.target.style.boxShadow = 'none'
+
     }
 
     const dropHandler = (e, board, item) => {
@@ -69,6 +78,7 @@ const TasksList = ({ todos }) => {
 
         }))
         e.target.style.boxShadow = 'none'
+
     }
 
     const dropCardHandler = (e, board) => {
@@ -85,10 +95,6 @@ const TasksList = ({ todos }) => {
             return b
         }))
         e.target.style.boxShadow = 'none'
-        dispatch({
-            type: "CHANGE_CARD",
-            payload: board.title
-        })
     }
 
 
@@ -109,9 +115,9 @@ const TasksList = ({ todos }) => {
                             className={cls.join(' ')}
                             draggable={true}
                             onDragOver={e => dragOverHandler(e)}
-                            onDragLeave={e => dragLeaveHandler(e)}
+                            onDragLeave={e => dragLeaveHandler(e, item)}
                             onDragStart={e => dragStartHandler(e, board, item)}
-                            onDragEnd={e => dragEndHandler(e)}
+                            onDragEnd={e => dragEndHandler(e, item)}
                             onDrop={e => dropHandler(e, board, item)}
                         >
                             <TasksItem {...item} />

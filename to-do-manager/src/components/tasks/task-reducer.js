@@ -24,18 +24,14 @@ export default function taskReducer(state, action) {
         case "REMOVE_TASK":
             return state.filter(todo => todo.id !== action.payload)
         case "CHANGE_CARD":
-            console.log('work')
-            return state
-        default:
-            return [
-                ...state,
-                // {
-                //     id: Date.now(),
-                //     title,
-                //     done: false,
-                //     board: action.payload
-                // }
+
+
+            return [...state,
+
+
             ]
+        default:
+            return state
     }
 
 
