@@ -12,7 +12,7 @@ import TasksItem from './TasksItem';
 const TasksList = ({ todos }) => {
     const { dispatch } = useContext(TaskContext)
     const [boards, setBoards] = useState(
-        // JSON.parse(localStorage.getItem("boards")) ||
+        JSON.parse(localStorage.getItem("boards")) ||
         [{ id: 1, title: 'queue', items: todos },
         { id: 2, title: 'development', items: [] }, { id: 3, title: 'done', items: [] }])
     const [currentBoard, setCurrentBoard] = useState(null)
@@ -21,12 +21,17 @@ const TasksList = ({ todos }) => {
 
 
 
-    useEffect(() => {
-        setBoards(JSON.parse(localStorage.getItem("boards")))
-    }, [todos])
+    // useEffect(() => {
+    //     setBoards(JSON.parse(localStorage.getItem("boards")))
+    // }, [todos])
 
     useEffect(() => {
         localStorage.setItem('boards', JSON.stringify(boards))
+        let a = (JSON.parse(localStorage.getItem("boards")))
+        console.log('boards', a);
+        let b = (JSON.parse(localStorage.getItem("todos")))
+
+        console.log('todos', b)
     }, [boards])
 
 
@@ -95,6 +100,8 @@ const TasksList = ({ todos }) => {
             return b
         }))
         e.target.style.boxShadow = 'none'
+        console.log(board.items);
+
     }
 
 
