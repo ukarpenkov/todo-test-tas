@@ -18,7 +18,7 @@ const TasksList = ({ todos }) => {
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
 
-
+    console.log(a)
 
 
     useEffect(() => {
