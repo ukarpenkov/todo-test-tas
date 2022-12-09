@@ -105,7 +105,7 @@ const TasksList = ({ todos }) => {
                     onDragOver={e => dragOverHandler(e)}
                     onDrop={e => dropCardHandler(e, board)}
                 >
-                    <h1>{board.title}</h1>
+                    <h1>{board.title}+</h1>
                     {board.items.map(item =>
                         <div
                             key={item.id}
