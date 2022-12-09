@@ -16,9 +16,6 @@ const TasksPage = () => {
 
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(state))
-        // let currentBoards = JSON.parse(localStorage.getItem("boards"))
-        // currentBoards[0].items.push(state)
-        // localStorage.setItem('boards', JSON.stringify(currentBoards))
     }, [state])
 
     const addTodo = event => {

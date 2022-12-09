@@ -18,13 +18,13 @@ const TasksList = ({ todos }) => {
     const [currentBoard, setCurrentBoard] = useState(null)
     const [currentItem, setCurrentItem] = useState(null)
 
-    useEffect(() => {
-        setBoards(JSON.parse(localStorage.getItem("boards")))
-    }, [todos])
+    // useEffect(() => {
+    //     setBoards(JSON.parse(localStorage.getItem("boards")))
+    // }, [todos])
 
-    useEffect(() => {
-        localStorage.setItem('boards', JSON.stringify(boards))
-    }, [boards])
+    // useEffect(() => {
+    //     localStorage.setItem('boards', JSON.stringify(boards))
+    // }, [boards])
 
     console.log('work');
 
