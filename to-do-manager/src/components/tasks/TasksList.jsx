@@ -26,7 +26,7 @@ const TasksList = ({ todos }) => {
         localStorage.setItem('boards', JSON.stringify(boards))
     }, [boards])
 
-
+    console.log('test');
 
     const cls = ['task-item']
     if (todos.done) {
