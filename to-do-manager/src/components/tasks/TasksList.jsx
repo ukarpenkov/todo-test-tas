@@ -100,7 +100,7 @@ const TasksList = ({ todos }) => {
 
 
     return (
-        <div className='app'>
+        <div className='boards'>
             {boards.map(board =>
                 <div
                     key={board.id}

@@ -40,13 +40,14 @@ const TasksPage = () => {
                     <input
                         type="text"
                         className='create-todo__input'
+                        placeholder='Введите текст задачи, для добавления задачи нажмите ↵, затем F5 (пока что...㋡)'
                         value={todoTitle}
                         onChange={event => setTodoTitle(event.target.value)}
                         onKeyPress={addTodo}
                     />
-                    <button className='create-todo__btn'
+                    {/* <button className='create-todo__btn'
                         onClick={() => setModal(true)}
-                    >Создать задачу</button>
+                    >Создать задачу</button> */}
                 </div>
                 <TaskCreator
                     isVisible={isModal}

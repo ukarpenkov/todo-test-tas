@@ -22,11 +22,11 @@ const TasksItem = ({ title, id, done }) => {
                     payload: id
                 })} />
             <span className='todo-item__todo-name'>{title}</span>
-            <button className='todo-item__delete-todo'
+            <span className='todo-item__delete-todo'
                 onClick={() => dispatch({
                     type: "REMOVE_TASK",
                     payload: id
-                })}>удалить задачу</button>
+                })}>✖</span>
         </>
     )
 }
