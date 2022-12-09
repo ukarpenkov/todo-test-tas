@@ -26,7 +26,7 @@ const TasksList = ({ todos }) => {
     //     localStorage.setItem('boards', JSON.stringify(boards))
     // }, [boards])
 
-    console.log('work');
+    console.log('есть проблемы с прокидыванием state...компонент отрисовки бордов не обновляется, потому что неправильно написан редьюсер и сформирован сам state');
 
     const cls = ['task-item']
     if (todos.done) {
